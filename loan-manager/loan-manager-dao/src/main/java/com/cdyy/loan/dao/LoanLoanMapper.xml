@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdyy.loan.dao.LoanLoanMapper" >
+  <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.po.LoanLoan" >
+    <id column="lid" property="lid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="lmoney" property="lmoney" jdbcType="BIGINT" />
+    <result column="lrate" property="lrate" jdbcType="DOUBLE" />
+    <result column="lterm" property="lterm" jdbcType="INTEGER" />
+    <result column="lclass" property="lclass" jdbcType="INTEGER" />
+    <result column="ltype" property="ltype" jdbcType="INTEGER" />
+    <result column="lstate" property="lstate" jdbcType="INTEGER" />
+    <result column="ltime" property="ltime" jdbcType="TIMESTAMP" />
+    <result column="lgettime" property="lgettime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    lid, uid, lmoney, lrate, lterm, lclass, ltype, lstate, ltime, lgettime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cdyy.loan.pojo.po.LoanLoanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from loan_loan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from loan_loan
+    where lid = #{lid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from loan_loan
+    where lid = #{lid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cdyy.loan.pojo.po.LoanLoanExample" >
+    delete from loan_loan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cdyy.loan.pojo.po.LoanLoan" >
+    insert into loan_loan (lid, uid, lmoney, 
+      lrate, lterm, lclass, 
+      ltype, lstate, ltime, 
+      lgettime)
+    values (#{lid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{lmoney,jdbcType=BIGINT}, 
+      #{lrate,jdbcType=DOUBLE}, #{lterm,jdbcType=INTEGER}, #{lclass,jdbcType=INTEGER}, 
+      #{ltype,jdbcType=INTEGER}, #{lstate,jdbcType=INTEGER}, #{ltime,jdbcType=TIMESTAMP}, 
+      #{lgettime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdyy.loan.pojo.po.LoanLoan" >
+    insert into loan_loan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lid != null" >
+        lid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="lmoney != null" >
+        lmoney,
+      </if>
+      <if test="lrate != null" >
+        lrate,
+      </if>
+      <if test="lterm != null" >
+        lterm,
+      </if>
+      <if test="lclass != null" >
+        lclass,
+      </if>
+      <if test="ltype != null" >
+        ltype,
+      </if>
+      <if test="lstate != null" >
+        lstate,
+      </if>
+      <if test="ltime != null" >
+        ltime,
+      </if>
+      <if test="lgettime != null" >
+        lgettime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lid != null" >
+        #{lid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="lmoney != null" >
+        #{lmoney,jdbcType=BIGINT},
+      </if>
+      <if test="lrate != null" >
+        #{lrate,jdbcType=DOUBLE},
+      </if>
+      <if test="lterm != null" >
+        #{lterm,jdbcType=INTEGER},
+      </if>
+      <if test="lclass != null" >
+        #{lclass,jdbcType=INTEGER},
+      </if>
+      <if test="ltype != null" >
+        #{ltype,jdbcType=INTEGER},
+      </if>
+      <if test="lstate != null" >
+        #{lstate,jdbcType=INTEGER},
+      </if>
+      <if test="ltime != null" >
+        #{ltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lgettime != null" >
+        #{lgettime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cdyy.loan.pojo.po.LoanLoanExample" resultType="java.lang.Integer" >
+    select count(*) from loan_loan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update loan_loan
+    <set >
+      <if test="record.lid != null" >
+        lid = #{record.lid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.lmoney != null" >
+        lmoney = #{record.lmoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.lrate != null" >
+        lrate = #{record.lrate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lterm != null" >
+        lterm = #{record.lterm,jdbcType=INTEGER},
+      </if>
+      <if test="record.lclass != null" >
+        lclass = #{record.lclass,jdbcType=INTEGER},
+      </if>
+      <if test="record.ltype != null" >
+        ltype = #{record.ltype,jdbcType=INTEGER},
+      </if>
+      <if test="record.lstate != null" >
+        lstate = #{record.lstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.ltime != null" >
+        ltime = #{record.ltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lgettime != null" >
+        lgettime = #{record.lgettime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update loan_loan
+    set lid = #{record.lid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      lmoney = #{record.lmoney,jdbcType=BIGINT},
+      lrate = #{record.lrate,jdbcType=DOUBLE},
+      lterm = #{record.lterm,jdbcType=INTEGER},
+      lclass = #{record.lclass,jdbcType=INTEGER},
+      ltype = #{record.ltype,jdbcType=INTEGER},
+      lstate = #{record.lstate,jdbcType=INTEGER},
+      ltime = #{record.ltime,jdbcType=TIMESTAMP},
+      lgettime = #{record.lgettime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdyy.loan.pojo.po.LoanLoan" >
+    update loan_loan
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="lmoney != null" >
+        lmoney = #{lmoney,jdbcType=BIGINT},
+      </if>
+      <if test="lrate != null" >
+        lrate = #{lrate,jdbcType=DOUBLE},
+      </if>
+      <if test="lterm != null" >
+        lterm = #{lterm,jdbcType=INTEGER},
+      </if>
+      <if test="lclass != null" >
+        lclass = #{lclass,jdbcType=INTEGER},
+      </if>
+      <if test="ltype != null" >
+        ltype = #{ltype,jdbcType=INTEGER},
+      </if>
+      <if test="lstate != null" >
+        lstate = #{lstate,jdbcType=INTEGER},
+      </if>
+      <if test="ltime != null" >
+        ltime = #{ltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lgettime != null" >
+        lgettime = #{lgettime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where lid = #{lid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdyy.loan.pojo.po.LoanLoan" >
+    update loan_loan
+    set uid = #{uid,jdbcType=BIGINT},
+      lmoney = #{lmoney,jdbcType=BIGINT},
+      lrate = #{lrate,jdbcType=DOUBLE},
+      lterm = #{lterm,jdbcType=INTEGER},
+      lclass = #{lclass,jdbcType=INTEGER},
+      ltype = #{ltype,jdbcType=INTEGER},
+      lstate = #{lstate,jdbcType=INTEGER},
+      ltime = #{ltime,jdbcType=TIMESTAMP},
+      lgettime = #{lgettime,jdbcType=TIMESTAMP}
+    where lid = #{lid,jdbcType=BIGINT}
+  </update>
+</mapper>

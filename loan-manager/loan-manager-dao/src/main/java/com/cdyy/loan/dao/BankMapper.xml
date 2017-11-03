@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdyy.loan.dao.BankMapper">
+  <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.vo.Bank">
+    <id column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="baccount" jdbcType="VARCHAR" property="baccount" />
+    <result column="bcardnumber" jdbcType="VARCHAR" property="bcardnumber" />
+    <result column="btime" jdbcType="TIMESTAMP" property="btime" />
+    <result column="bstate" jdbcType="VARCHAR" property="bstate" />
+    
+     <association property="customer" javaType="com.cdyy.loan.pojo.vo.Customer">
+	    <result column="uid" property="uid" />
+    	<result column="username" property="username" />
+    	<result column="realname" property="realname" />
+	</association>
+  </resultMap>
+  
+  <resultMap id="selectMap" type="com.cdyy.loan.pojo.vo.Bank">
+    <id column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="baccount" jdbcType="VARCHAR" property="baccount" />
+    <result column="bcardnumber" jdbcType="VARCHAR" property="bcardnumber" />
+    <result column="btime" jdbcType="TIMESTAMP" property="btime" />
+    <result column="bstate" jdbcType="VARCHAR" property="bstate" />
+ </resultMap>
+  <sql id="Base_Column_List">
+    bid, uid, baccount, bcardnumber, btime, bstate
+  </sql>
+  <!--<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bank
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bank
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cdyy.loan.pojo.vo.Bank">
+    insert into bank (bid, uid, baccount, 
+      bcardnumber, btime, bstate
+      )
+    values (#{bid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{baccount,jdbcType=VARCHAR}, 
+      #{bcardnumber,jdbcType=VARCHAR}, #{btime,jdbcType=TIMESTAMP}, #{bstate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="addbank" parameterType="com.ht.h.bean.Bank">
+    insert into bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        bid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="baccount != null">
+        baccount,
+      </if>
+      <if test="bcardnumber != null">
+        bcardnumber,
+      </if>
+      <if test="btime != null">
+        btime,
+      </if>
+      <if test="bstate != null">
+        bstate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="baccount != null">
+        #{baccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bcardnumber != null">
+        #{bcardnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="btime != null">
+        #{btime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bstate != null">
+        #{bstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.h.bean.Bank">
+    update bank
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="baccount != null">
+        baccount = #{baccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bcardnumber != null">
+        bcardnumber = #{bcardnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="btime != null">
+        btime = #{btime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bstate != null">
+        bstate = #{bstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.h.bean.Bank">
+    update bank
+    set uid = #{uid,jdbcType=INTEGER},
+      baccount = #{baccount,jdbcType=VARCHAR},
+      bcardnumber = #{bcardnumber,jdbcType=VARCHAR},
+      btime = #{btime,jdbcType=TIMESTAMP},
+      bstate = #{bstate,jdbcType=VARCHAR}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  
+  
+   <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select b.bid , b.uid , b.baccount , b.bcardnumber , b.btime, b.bstate , cus.uid ,cus.username,cus.realname
+   	 from bank b,customer cus
+    <where>
+    	b.uid=cus.uid 
+    	<if test="username!=null and username!='' ">
+			and cus.username like #{username}
+		</if>
+		<if test="realname!=null and realname!='' ">
+			and cus.realname like #{realname}
+		</if>
+    	<if test="bcardnumber!=null and bcardnumber!='' ">
+			and b.bcardnumber like #{bcardnumber}
+		</if>
+		<if test="bstate!=null and bstate!='' ">
+			and b.bstate like #{bstate}
+		</if>
+		
+		<if test="btime!=null and btime!='' and btime1!=null and btime1!=''">
+			and b.btime between #{btime} and #{btime1}
+		</if>
+    </where>
+  	 order by b.bid desc
+  	 <if test="start!=null and size!=null">
+		limit #{start},#{size}
+	</if>
+  </select>
+  
+   &lt;!&ndash; 查询银行卡条数 &ndash;&gt;
+   <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+ 	select count(*) from bank b,customer cus
+		 <where>
+    	b.uid=cus.uid 
+    	<if test="bcardnumber!=null and bcardnumber!='' ">
+			and b.bcardnumber like #{bcardnumber}
+		</if>
+		<if test="bstate!=null and bstate!='' ">
+			and b.bstate like #{bstate}
+		</if>
+		
+		<if test="btime!=null and btime!='' and btime1!=null and btime1!=''">
+			and b.btime between #{btime} and #{btime1}
+		</if>
+    </where>
+ </select>
+  <select id="selectCard" parameterType="java.lang.Integer" resultMap="selectMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bank
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>-->
+ <!-- 查询当前用户所以银行卡信息 -->
+ <select id="queryByUid" parameterType="long" resultMap="BaseResultMap">
+ 	select * from loan_bank where uid=#{uid};
+ </select>
+</mapper>

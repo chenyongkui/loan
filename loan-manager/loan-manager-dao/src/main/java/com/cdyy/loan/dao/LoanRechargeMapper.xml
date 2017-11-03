@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdyy.loan.dao.LoanRechargeMapper" >
+  <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.po.LoanRecharge" >
+    <id column="rid" property="rid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="rtype" property="rtype" jdbcType="INTEGER" />
+    <result column="rbid" property="rbid" jdbcType="BIGINT" />
+    <result column="rmoney" property="rmoney" jdbcType="DOUBLE" />
+    <result column="rcounterfee" property="rcounterfee" jdbcType="DOUBLE" />
+    <result column="ractual" property="ractual" jdbcType="DOUBLE" />
+    <result column="rserial" property="rserial" jdbcType="VARCHAR" />
+    <result column="rstate" property="rstate" jdbcType="INTEGER" />
+    <result column="rtime" property="rtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rid, uid, rtype, rbid, rmoney, rcounterfee, ractual, rserial, rstate, rtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cdyy.loan.pojo.po.LoanRechargeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from loan_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from loan_recharge
+    where rid = #{rid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from loan_recharge
+    where rid = #{rid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cdyy.loan.pojo.po.LoanRechargeExample" >
+    delete from loan_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cdyy.loan.pojo.po.LoanRecharge" >
+    insert into loan_recharge (rid, uid, rtype, 
+      rbid, rmoney, rcounterfee, 
+      ractual, rserial, rstate, 
+      rtime)
+    values (#{rid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{rtype,jdbcType=INTEGER}, 
+      #{rbid,jdbcType=BIGINT}, #{rmoney,jdbcType=DOUBLE}, #{rcounterfee,jdbcType=DOUBLE}, 
+      #{ractual,jdbcType=DOUBLE}, #{rserial,jdbcType=VARCHAR}, #{rstate,jdbcType=INTEGER}, 
+      #{rtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdyy.loan.pojo.po.LoanRecharge" >
+    insert into loan_recharge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="rtype != null" >
+        rtype,
+      </if>
+      <if test="rbid != null" >
+        rbid,
+      </if>
+      <if test="rmoney != null" >
+        rmoney,
+      </if>
+      <if test="rcounterfee != null" >
+        rcounterfee,
+      </if>
+      <if test="ractual != null" >
+        ractual,
+      </if>
+      <if test="rserial != null" >
+        rserial,
+      </if>
+      <if test="rstate != null" >
+        rstate,
+      </if>
+      <if test="rtime != null" >
+        rtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="rtype != null" >
+        #{rtype,jdbcType=INTEGER},
+      </if>
+      <if test="rbid != null" >
+        #{rbid,jdbcType=BIGINT},
+      </if>
+      <if test="rmoney != null" >
+        #{rmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="rcounterfee != null" >
+        #{rcounterfee,jdbcType=DOUBLE},
+      </if>
+      <if test="ractual != null" >
+        #{ractual,jdbcType=DOUBLE},
+      </if>
+      <if test="rserial != null" >
+        #{rserial,jdbcType=VARCHAR},
+      </if>
+      <if test="rstate != null" >
+        #{rstate,jdbcType=INTEGER},
+      </if>
+      <if test="rtime != null" >
+        #{rtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cdyy.loan.pojo.po.LoanRechargeExample" resultType="java.lang.Integer" >
+    select count(*) from loan_recharge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update loan_recharge
+    <set >
+      <if test="record.rid != null" >
+        rid = #{record.rid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.rtype != null" >
+        rtype = #{record.rtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.rbid != null" >
+        rbid = #{record.rbid,jdbcType=BIGINT},
+      </if>
+      <if test="record.rmoney != null" >
+        rmoney = #{record.rmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rcounterfee != null" >
+        rcounterfee = #{record.rcounterfee,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ractual != null" >
+        ractual = #{record.ractual,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rserial != null" >
+        rserial = #{record.rserial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rstate != null" >
+        rstate = #{record.rstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.rtime != null" >
+        rtime = #{record.rtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update loan_recharge
+    set rid = #{record.rid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      rtype = #{record.rtype,jdbcType=INTEGER},
+      rbid = #{record.rbid,jdbcType=BIGINT},
+      rmoney = #{record.rmoney,jdbcType=DOUBLE},
+      rcounterfee = #{record.rcounterfee,jdbcType=DOUBLE},
+      ractual = #{record.ractual,jdbcType=DOUBLE},
+      rserial = #{record.rserial,jdbcType=VARCHAR},
+      rstate = #{record.rstate,jdbcType=INTEGER},
+      rtime = #{record.rtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdyy.loan.pojo.po.LoanRecharge" >
+    update loan_recharge
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="rtype != null" >
+        rtype = #{rtype,jdbcType=INTEGER},
+      </if>
+      <if test="rbid != null" >
+        rbid = #{rbid,jdbcType=BIGINT},
+      </if>
+      <if test="rmoney != null" >
+        rmoney = #{rmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="rcounterfee != null" >
+        rcounterfee = #{rcounterfee,jdbcType=DOUBLE},
+      </if>
+      <if test="ractual != null" >
+        ractual = #{ractual,jdbcType=DOUBLE},
+      </if>
+      <if test="rserial != null" >
+        rserial = #{rserial,jdbcType=VARCHAR},
+      </if>
+      <if test="rstate != null" >
+        rstate = #{rstate,jdbcType=INTEGER},
+      </if>
+      <if test="rtime != null" >
+        rtime = #{rtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdyy.loan.pojo.po.LoanRecharge" >
+    update loan_recharge
+    set uid = #{uid,jdbcType=BIGINT},
+      rtype = #{rtype,jdbcType=INTEGER},
+      rbid = #{rbid,jdbcType=BIGINT},
+      rmoney = #{rmoney,jdbcType=DOUBLE},
+      rcounterfee = #{rcounterfee,jdbcType=DOUBLE},
+      ractual = #{ractual,jdbcType=DOUBLE},
+      rserial = #{rserial,jdbcType=VARCHAR},
+      rstate = #{rstate,jdbcType=INTEGER},
+      rtime = #{rtime,jdbcType=TIMESTAMP}
+    where rid = #{rid,jdbcType=BIGINT}
+  </update>
+</mapper>

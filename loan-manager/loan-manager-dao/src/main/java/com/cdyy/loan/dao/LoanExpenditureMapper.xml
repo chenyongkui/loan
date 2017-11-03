@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdyy.loan.dao.LoanExpenditureMapper" >
+  <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.po.LoanExpenditure" >
+    <id column="eid" property="eid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="etype" property="etype" jdbcType="INTEGER" />
+    <result column="emoney" property="emoney" jdbcType="DOUBLE" />
+    <result column="etime" property="etime" jdbcType="TIMESTAMP" />
+    <result column="eremarks" property="eremarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    eid, uid, etype, emoney, etime, eremarks
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cdyy.loan.pojo.po.LoanExpenditureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from loan_expenditure
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from loan_expenditure
+    where eid = #{eid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from loan_expenditure
+    where eid = #{eid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cdyy.loan.pojo.po.LoanExpenditureExample" >
+    delete from loan_expenditure
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cdyy.loan.pojo.po.LoanExpenditure" >
+    insert into loan_expenditure (eid, uid, etype, 
+      emoney, etime, eremarks
+      )
+    values (#{eid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{etype,jdbcType=INTEGER}, 
+      #{emoney,jdbcType=DOUBLE}, #{etime,jdbcType=TIMESTAMP}, #{eremarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdyy.loan.pojo.po.LoanExpenditure" >
+    insert into loan_expenditure
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eid != null" >
+        eid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="etype != null" >
+        etype,
+      </if>
+      <if test="emoney != null" >
+        emoney,
+      </if>
+      <if test="etime != null" >
+        etime,
+      </if>
+      <if test="eremarks != null" >
+        eremarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eid != null" >
+        #{eid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="etype != null" >
+        #{etype,jdbcType=INTEGER},
+      </if>
+      <if test="emoney != null" >
+        #{emoney,jdbcType=DOUBLE},
+      </if>
+      <if test="etime != null" >
+        #{etime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eremarks != null" >
+        #{eremarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cdyy.loan.pojo.po.LoanExpenditureExample" resultType="java.lang.Integer" >
+    select count(*) from loan_expenditure
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update loan_expenditure
+    <set >
+      <if test="record.eid != null" >
+        eid = #{record.eid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.etype != null" >
+        etype = #{record.etype,jdbcType=INTEGER},
+      </if>
+      <if test="record.emoney != null" >
+        emoney = #{record.emoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.etime != null" >
+        etime = #{record.etime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eremarks != null" >
+        eremarks = #{record.eremarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update loan_expenditure
+    set eid = #{record.eid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      etype = #{record.etype,jdbcType=INTEGER},
+      emoney = #{record.emoney,jdbcType=DOUBLE},
+      etime = #{record.etime,jdbcType=TIMESTAMP},
+      eremarks = #{record.eremarks,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdyy.loan.pojo.po.LoanExpenditure" >
+    update loan_expenditure
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="etype != null" >
+        etype = #{etype,jdbcType=INTEGER},
+      </if>
+      <if test="emoney != null" >
+        emoney = #{emoney,jdbcType=DOUBLE},
+      </if>
+      <if test="etime != null" >
+        etime = #{etime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eremarks != null" >
+        eremarks = #{eremarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where eid = #{eid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdyy.loan.pojo.po.LoanExpenditure" >
+    update loan_expenditure
+    set uid = #{uid,jdbcType=BIGINT},
+      etype = #{etype,jdbcType=INTEGER},
+      emoney = #{emoney,jdbcType=DOUBLE},
+      etime = #{etime,jdbcType=TIMESTAMP},
+      eremarks = #{eremarks,jdbcType=VARCHAR}
+    where eid = #{eid,jdbcType=BIGINT}
+  </update>
+</mapper>

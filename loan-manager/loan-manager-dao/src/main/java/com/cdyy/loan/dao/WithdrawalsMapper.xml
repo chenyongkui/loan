@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdyy.loan.dao.WithdrawalsMapper">
+    <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.vo.Withdrawals">
+        <id column="wid" jdbcType="INTEGER" property="wid" />
+        <result column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="wmoney" jdbcType="DECIMAL" property="wmoney" />
+        <result column="wcounterfee" jdbcType="DECIMAL" property="wcounterfee" />
+        <result column="wactual" jdbcType="DECIMAL" property="wactual" />
+        <result column="wstate" jdbcType="VARCHAR" property="wstate" />
+        <result column="wtime" jdbcType="TIMESTAMP" property="wtime" />
+
+        <association property="customer" javaType="com.cdyy.loan.pojo.vo.Customer">
+            <result property="uid" column="uid"/>
+            <result property="username" column="username"/>
+            <result property="realname" column="realname"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="WitgoCapResultMap" type="com.cdyy.loan.pojo.vo.Withdrawals">
+        <id column="wid" jdbcType="BIGINT" property="wid" />
+        <result column="uid" jdbcType="BIGINT" property="uid" />
+        <result column="bid" jdbcType="BIGINT" property="bid" />
+        <result column="wmoney" jdbcType="DECIMAL" property="wmoney" />
+        <result column="wtime" jdbcType="TIMESTAMP" property="wtime" />
+        <result column="wstate" jdbcType="VARCHAR" property="wstate" />
+
+        <association property="capital" javaType="com.cdyy.loan.pojo.vo.Capital">
+            <result column="cid" property="cid" />
+            <result column="uid" jdbcType="INTEGER" property="uid" />
+            <result column="available" jdbcType="DECIMAL" property="available" />
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+        wid, uid,bid,wmoney, wcounterfee, wactual, wstate, wtime
+    </sql>
+
+    <sql id="Cap_Wit_List">
+        w.wtime,w.wmoney,w.wstate,c.Available
+    </sql>
+
+   <select id="selectWithdrawals"   resultType="com.cdyy.loan.pojo.vo.Withdrawals">
+       SELECT
+       <include refid="Base_Column_List"/>
+       FROM loan_withdrawals  WHERE uid = #{uid} limit #{start},#{pageSize}
+   </select>
+    
+ <select id="withdrawalsCount" resultType="int">
+     SELECT
+     count(*) FROM loan_withdrawals
+
+ </select>
+    
+</mapper>

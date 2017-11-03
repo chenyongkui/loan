@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdyy.loan.dao.LoanCustomerProductMapper" >
+  <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.po.LoanCustomerProduct" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="pnumber" property="pnumber" jdbcType="INTEGER" />
+    <result column="pperiods" property="pperiods" jdbcType="INTEGER" />
+    <result column="pstarttime" property="pstarttime" jdbcType="TIMESTAMP" />
+    <result column="pendtime" property="pendtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, pid, pnumber, pperiods, pstarttime, pendtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cdyy.loan.pojo.po.LoanCustomerProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from loan_customer_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from loan_customer_product
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from loan_customer_product
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cdyy.loan.pojo.po.LoanCustomerProductExample" >
+    delete from loan_customer_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cdyy.loan.pojo.po.LoanCustomerProduct" >
+    insert into loan_customer_product (uid, pid, pnumber, 
+      pperiods, pstarttime, pendtime
+      )
+    values (#{uid,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{pnumber,jdbcType=INTEGER}, 
+      #{pperiods,jdbcType=INTEGER}, #{pstarttime,jdbcType=TIMESTAMP}, #{pendtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdyy.loan.pojo.po.LoanCustomerProduct" >
+    insert into loan_customer_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pnumber != null" >
+        pnumber,
+      </if>
+      <if test="pperiods != null" >
+        pperiods,
+      </if>
+      <if test="pstarttime != null" >
+        pstarttime,
+      </if>
+      <if test="pendtime != null" >
+        pendtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pnumber != null" >
+        #{pnumber,jdbcType=INTEGER},
+      </if>
+      <if test="pperiods != null" >
+        #{pperiods,jdbcType=INTEGER},
+      </if>
+      <if test="pstarttime != null" >
+        #{pstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pendtime != null" >
+        #{pendtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cdyy.loan.pojo.po.LoanCustomerProductExample" resultType="java.lang.Integer" >
+    select count(*) from loan_customer_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update loan_customer_product
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pnumber != null" >
+        pnumber = #{record.pnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.pperiods != null" >
+        pperiods = #{record.pperiods,jdbcType=INTEGER},
+      </if>
+      <if test="record.pstarttime != null" >
+        pstarttime = #{record.pstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pendtime != null" >
+        pendtime = #{record.pendtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update loan_customer_product
+    set uid = #{record.uid,jdbcType=BIGINT},
+      pid = #{record.pid,jdbcType=BIGINT},
+      pnumber = #{record.pnumber,jdbcType=INTEGER},
+      pperiods = #{record.pperiods,jdbcType=INTEGER},
+      pstarttime = #{record.pstarttime,jdbcType=TIMESTAMP},
+      pendtime = #{record.pendtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdyy.loan.pojo.po.LoanCustomerProduct" >
+    update loan_customer_product
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pnumber != null" >
+        pnumber = #{pnumber,jdbcType=INTEGER},
+      </if>
+      <if test="pperiods != null" >
+        pperiods = #{pperiods,jdbcType=INTEGER},
+      </if>
+      <if test="pstarttime != null" >
+        pstarttime = #{pstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pendtime != null" >
+        pendtime = #{pendtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdyy.loan.pojo.po.LoanCustomerProduct" >
+    update loan_customer_product
+    set pid = #{pid,jdbcType=BIGINT},
+      pnumber = #{pnumber,jdbcType=INTEGER},
+      pperiods = #{pperiods,jdbcType=INTEGER},
+      pstarttime = #{pstarttime,jdbcType=TIMESTAMP},
+      pendtime = #{pendtime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdyy.loan.dao.LoanBankMapper" >
+  <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.po.LoanBank" >
+    <id column="bid" property="bid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="baccount" property="baccount" jdbcType="VARCHAR" />
+    <result column="bcardnumber" property="bcardnumber" jdbcType="VARCHAR" />
+    <result column="btime" property="btime" jdbcType="TIMESTAMP" />
+    <result column="bstate" property="bstate" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bid, uid, baccount, bcardnumber, btime, bstate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cdyy.loan.pojo.po.LoanBankExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from loan_bank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from loan_bank
+    where bid = #{bid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from loan_bank
+    where bid = #{bid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cdyy.loan.pojo.po.LoanBankExample" >
+    delete from loan_bank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cdyy.loan.pojo.po.LoanBank" >
+    insert into loan_bank (bid, uid, baccount, 
+      bcardnumber, btime, bstate
+      )
+    values (#{bid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{baccount,jdbcType=VARCHAR}, 
+      #{bcardnumber,jdbcType=VARCHAR}, #{btime,jdbcType=TIMESTAMP}, #{bstate,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdyy.loan.pojo.po.LoanBank" >
+    insert into loan_bank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="baccount != null" >
+        baccount,
+      </if>
+      <if test="bcardnumber != null" >
+        bcardnumber,
+      </if>
+      <if test="btime != null" >
+        btime,
+      </if>
+      <if test="bstate != null" >
+        bstate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        #{bid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="baccount != null" >
+        #{baccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bcardnumber != null" >
+        #{bcardnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="btime != null" >
+        #{btime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bstate != null" >
+        #{bstate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cdyy.loan.pojo.po.LoanBankExample" resultType="java.lang.Integer" >
+    select count(*) from loan_bank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update loan_bank
+    <set >
+      <if test="record.bid != null" >
+        bid = #{record.bid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.baccount != null" >
+        baccount = #{record.baccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bcardnumber != null" >
+        bcardnumber = #{record.bcardnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.btime != null" >
+        btime = #{record.btime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bstate != null" >
+        bstate = #{record.bstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update loan_bank
+    set bid = #{record.bid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      baccount = #{record.baccount,jdbcType=VARCHAR},
+      bcardnumber = #{record.bcardnumber,jdbcType=VARCHAR},
+      btime = #{record.btime,jdbcType=TIMESTAMP},
+      bstate = #{record.bstate,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdyy.loan.pojo.po.LoanBank" >
+    update loan_bank
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="baccount != null" >
+        baccount = #{baccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bcardnumber != null" >
+        bcardnumber = #{bcardnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="btime != null" >
+        btime = #{btime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bstate != null" >
+        bstate = #{bstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdyy.loan.pojo.po.LoanBank" >
+    update loan_bank
+    set uid = #{uid,jdbcType=BIGINT},
+      baccount = #{baccount,jdbcType=VARCHAR},
+      bcardnumber = #{bcardnumber,jdbcType=VARCHAR},
+      btime = #{btime,jdbcType=TIMESTAMP},
+      bstate = #{bstate,jdbcType=INTEGER}
+    where bid = #{bid,jdbcType=BIGINT}
+  </update>
+</mapper>

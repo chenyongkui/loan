@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cdyy.loan.dao.LoanCapitalMapper" >
+  <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.po.LoanCapital" >
+    <id column="cid" property="cid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="allasset" property="allasset" jdbcType="DOUBLE" />
+    <result column="income" property="income" jdbcType="DOUBLE" />
+    <result column="expenditure" property="expenditure" jdbcType="DOUBLE" />
+    <result column="available" property="available" jdbcType="DOUBLE" />
+    <result column="frozen" property="frozen" jdbcType="DOUBLE" />
+    <result column="still" property="still" jdbcType="DOUBLE" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cid, uid, allasset, income, expenditure, available, frozen, still, ctime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cdyy.loan.pojo.po.LoanCapitalExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from loan_capital
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from loan_capital
+    where cid = #{cid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from loan_capital
+    where cid = #{cid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cdyy.loan.pojo.po.LoanCapitalExample" >
+    delete from loan_capital
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cdyy.loan.pojo.po.LoanCapital" >
+    insert into loan_capital (cid, uid, allasset, 
+      income, expenditure, available, 
+      frozen, still, ctime
+      )
+    values (#{cid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{allasset,jdbcType=DOUBLE}, 
+      #{income,jdbcType=DOUBLE}, #{expenditure,jdbcType=DOUBLE}, #{available,jdbcType=DOUBLE}, 
+      #{frozen,jdbcType=DOUBLE}, #{still,jdbcType=DOUBLE}, #{ctime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdyy.loan.pojo.po.LoanCapital" >
+    insert into loan_capital
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="allasset != null" >
+        allasset,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="expenditure != null" >
+        expenditure,
+      </if>
+      <if test="available != null" >
+        available,
+      </if>
+      <if test="frozen != null" >
+        frozen,
+      </if>
+      <if test="still != null" >
+        still,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="allasset != null" >
+        #{allasset,jdbcType=DOUBLE},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=DOUBLE},
+      </if>
+      <if test="expenditure != null" >
+        #{expenditure,jdbcType=DOUBLE},
+      </if>
+      <if test="available != null" >
+        #{available,jdbcType=DOUBLE},
+      </if>
+      <if test="frozen != null" >
+        #{frozen,jdbcType=DOUBLE},
+      </if>
+      <if test="still != null" >
+        #{still,jdbcType=DOUBLE},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cdyy.loan.pojo.po.LoanCapitalExample" resultType="java.lang.Integer" >
+    select count(*) from loan_capital
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update loan_capital
+    <set >
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.allasset != null" >
+        allasset = #{record.allasset,jdbcType=DOUBLE},
+      </if>
+      <if test="record.income != null" >
+        income = #{record.income,jdbcType=DOUBLE},
+      </if>
+      <if test="record.expenditure != null" >
+        expenditure = #{record.expenditure,jdbcType=DOUBLE},
+      </if>
+      <if test="record.available != null" >
+        available = #{record.available,jdbcType=DOUBLE},
+      </if>
+      <if test="record.frozen != null" >
+        frozen = #{record.frozen,jdbcType=DOUBLE},
+      </if>
+      <if test="record.still != null" >
+        still = #{record.still,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ctime != null" >
+        ctime = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update loan_capital
+    set cid = #{record.cid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      allasset = #{record.allasset,jdbcType=DOUBLE},
+      income = #{record.income,jdbcType=DOUBLE},
+      expenditure = #{record.expenditure,jdbcType=DOUBLE},
+      available = #{record.available,jdbcType=DOUBLE},
+      frozen = #{record.frozen,jdbcType=DOUBLE},
+      still = #{record.still,jdbcType=DOUBLE},
+      ctime = #{record.ctime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdyy.loan.pojo.po.LoanCapital" >
+    update loan_capital
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="allasset != null" >
+        allasset = #{allasset,jdbcType=DOUBLE},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=DOUBLE},
+      </if>
+      <if test="expenditure != null" >
+        expenditure = #{expenditure,jdbcType=DOUBLE},
+      </if>
+      <if test="available != null" >
+        available = #{available,jdbcType=DOUBLE},
+      </if>
+      <if test="frozen != null" >
+        frozen = #{frozen,jdbcType=DOUBLE},
+      </if>
+      <if test="still != null" >
+        still = #{still,jdbcType=DOUBLE},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdyy.loan.pojo.po.LoanCapital" >
+    update loan_capital
+    set uid = #{uid,jdbcType=BIGINT},
+      allasset = #{allasset,jdbcType=DOUBLE},
+      income = #{income,jdbcType=DOUBLE},
+      expenditure = #{expenditure,jdbcType=DOUBLE},
+      available = #{available,jdbcType=DOUBLE},
+      frozen = #{frozen,jdbcType=DOUBLE},
+      still = #{still,jdbcType=DOUBLE},
+      ctime = #{ctime,jdbcType=TIMESTAMP}
+    where cid = #{cid,jdbcType=BIGINT}
+  </update>
+</mapper>

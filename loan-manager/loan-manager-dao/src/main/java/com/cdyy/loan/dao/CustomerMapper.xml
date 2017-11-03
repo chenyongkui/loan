@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdyy.loan.dao.CustomerMapper">
+  <resultMap id="BaseResultMap" type="com.cdyy.loan.pojo.vo.Customer">
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="userpwd" jdbcType="VARCHAR" property="userpwd" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="idnumber" jdbcType="VARCHAR" property="idnumber" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="credit" jdbcType="DOUBLE" property="credit" />
+    <result column="ustate" jdbcType="VARCHAR" property="ustate" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <!--<result column="information" jdbcType="VARCHAR" property="information" />-->
+    <result column="email" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, username, userpwd, realname, sex, idnumber, phone, credit, ustate, createtime, 
+    email
+  </sql>
+  
+  <!-- 客户登录 -->
+  <select id="cusLogin"  resultMap="BaseResultMap">
+ 	select 
+ 	<include refid="Base_Column_List" />
+    from loan_customer
+    where (username = #{username} or phone = #{phone})
+    and userpwd = #{userpwd1}
+  </select>
+  
+  <select id="selectByName"  parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select uid from loan_customer where (username= #{username})
+  </select>
+
+   <select id="selectByPhone"  parameterType="java.lang.String" resultMap="BaseResultMap">
+	select uid from loan_customer where (phone= #{phone})
+   </select>
+  <update id="updatePassWord">
+    UPDATE loan_customer SET userpwd = #{userpwd}
+    WHERE uid=#{uid}
+  </update>
+  <update id="updatePhoneNumber">
+    UPDATE loan_customer SET phone = #{phone}
+    WHERE uid=#{uid}
+  </update>
+  <!--
+    &lt;!&ndash;&lt;!&ndash; 根据id查询客户信息 &ndash;&gt;&ndash;&gt;
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from loan_customer
+      where uid = #{uid,jdbcType=INTEGER}
+    </select>
+
+    &lt;!&ndash;&lt;!&ndash; 根据id删除客户（禁用） &ndash;&gt;&ndash;&gt;
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+      delete from loan_customer
+      where uid = #{uid,jdbcType=INTEGER}
+    </delete>
+
+    &lt;!&ndash;&lt;!&ndash; 添加客户 &ndash;&gt;&ndash;&gt;
+    <insert id="insert" parameterType="com.ht.h.bean.Customer">
+      insert into loan_customer (uid, username, userpwd,
+        realname, sex, idnumber,
+        phone, credit, ustate,
+        createtime, information,email)
+      values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpwd,jdbcType=VARCHAR},
+        #{realname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{idnumber,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR}, #{credit,jdbcType=DOUBLE}, #{ustate,jdbcType=VARCHAR},
+        #{createtime,jdbcType=TIMESTAMP}, #{information,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR})
+    </insert>
+
+    &lt;!&ndash;&lt;!&ndash; 添加客户 &ndash;&gt;&ndash;&gt;
+    <insert id="insertSelective" parameterType="com.ht.h.bean.Customer">
+      insert into loan_customer
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+          uid,
+        </if>
+        <if test="username != null">
+          username,
+        </if>
+        <if test="userpwd != null">
+          userpwd,
+        </if>
+        <if test="realname != null">
+          realname,
+        </if>
+        <if test="sex != null">
+          sex,
+        </if>
+        <if test="idnumber != null">
+          idnumber,
+        </if>
+        <if test="phone != null">
+          phone,
+        </if>
+        <if test="credit != null">
+          credit,
+        </if>
+        <if test="ustate != null">
+          ustate,
+        </if>
+        <if test="createtime != null">
+          createtime,
+        </if>
+        <if test="information != null">
+          information,
+        </if>
+        <if test="email != null">
+            email,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+          #{uid,jdbcType=INTEGER},
+        </if>
+        <if test="username != null">
+          #{username,jdbcType=VARCHAR},
+        </if>
+        <if test="userpwd != null">
+          #{userpwd,jdbcType=VARCHAR},
+        </if>
+        <if test="realname != null">
+          #{realname,jdbcType=VARCHAR},
+        </if>
+        <if test="sex != null">
+          #{sex,jdbcType=VARCHAR},
+        </if>
+        <if test="idnumber != null">
+          #{idnumber,jdbcType=VARCHAR},
+        </if>
+        <if test="phone != null">
+          #{phone,jdbcType=VARCHAR},
+        </if>
+        <if test="credit != null">
+          #{credit,jdbcType=DOUBLE},
+        </if>
+        <if test="ustate != null">
+          #{ustate,jdbcType=VARCHAR},
+        </if>
+        <if test="createtime != null">
+          #{createtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="information != null">
+          #{information,jdbcType=VARCHAR},
+        </if>
+        <if test="email != null">
+            #{email,jdbcType=VARCHAR},
+        </if>
+      </trim>
+    </insert>
+
+    &lt;!&ndash;&lt;!&ndash; 修改客户信息 &ndash;&gt;&ndash;&gt;
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht.h.bean.Customer">
+      update loan_customer
+      <set>
+        <if test="username != null">
+          username = #{username,jdbcType=VARCHAR},
+        </if>
+        <if test="userpwd != null">
+          userpwd = #{userpwd,jdbcType=VARCHAR},
+        </if>
+        <if test="realname != null">
+          realname = #{realname,jdbcType=VARCHAR},
+        </if>
+        <if test="sex != null">
+          sex = #{sex,jdbcType=VARCHAR},
+        </if>
+        <if test="idnumber != null">
+          idnumber = #{idnumber,jdbcType=VARCHAR},
+        </if>
+        <if test="phone != null">
+          phone = #{phone,jdbcType=VARCHAR},
+        </if>
+        <if test="credit != null">
+          credit = #{credit,jdbcType=DOUBLE},
+        </if>
+        <if test="ustate != null">
+          ustate = #{ustate,jdbcType=VARCHAR},
+        </if>
+        <if test="createtime != null">
+          createtime = #{createtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="information != null">
+          information = #{information,jdbcType=VARCHAR},
+        </if>
+        <if test="email != null">
+            email = #{email,jdbcType=VARCHAR},
+        </if>
+      </set>
+      where uid = #{uid,jdbcType=INTEGER}
+    </update>
+
+    &lt;!&ndash;&lt;!&ndash; 修改客户信息 &ndash;&gt;&ndash;&gt;
+    <update id="updateByPrimaryKey" parameterType="com.ht.h.bean.Customer">
+      update loan_customer
+      set username = #{username,jdbcType=VARCHAR},
+        userpwd = #{userpwd,jdbcType=VARCHAR},
+        realname = #{realname,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=VARCHAR},
+        idnumber = #{idnumber,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        credit = #{credit,jdbcType=DOUBLE},
+        ustate = #{ustate,jdbcType=VARCHAR},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+        information = #{information,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR}
+      where uid = #{uid,jdbcType=INTEGER}
+    </update>
+
+        &lt;!&ndash;&lt;!&ndash; 分页加条件查询 &ndash;&gt;&ndash;&gt;
+      <select id="queryAll" parameterType="Map" resultMap="BaseResultMap">
+          select <include refid="Base_Column_List" /> from loan_customer
+          <where>
+              <if test="username!=null and username!='' ">
+                  and username like #{username}
+              </if>
+              <if test="realname!=null and realname!='' ">
+                  and realname like #{realname}
+              </if>
+              <if test="idnumber!=null and idnumber!='' ">
+                  and idnumber like #{idnumber}
+              </if>
+              <if test="ustate!=null and ustate!='' ">
+                  and ustate = #{ustate}
+              </if>
+          </where>
+          order by createtime desc
+          <if test="start!=null and size!=null">
+              limit #{start},#{size}
+          </if>
+      </select>
+
+      &lt;!&ndash;查询客户总条数&ndash;&gt;
+      <select id="getTotal" parameterType="Map" resultType="Long">
+          select count(*) from loan_customer
+          <where>
+              <if test="username!=null and username!='' ">
+                  and username like #{username}
+              </if>
+              <if test="realname!=null and realname!='' ">
+                  and realname like #{realname}
+              </if>
+              <if test="idnumber!=null and idnumber!='' ">
+                  and idnumber like #{idnumber}
+              </if>
+              <if test="ustate!=null and ustate!='' ">
+                  and ustate = #{ustate}
+              </if>
+          </where>
+      </select>-->
+</mapper>
